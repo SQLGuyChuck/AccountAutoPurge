@@ -6,7 +6,7 @@ Developed and written by Chuck Lathrope (SQLGuyChuck). Please do help contribute
 ## Why
 This process was developed out of necessity of GDPR Article 17 for a data subjects rights to erasure. This can be accomplished in a couple of ways:
 1. By anonymizing the data by which a data scientist with all the data accessible in the world could not reverse engineer the data to re-identify a human.
-2. Just delete the data. This code utilizes the later. The advantage of this is that you can use it for slowly deleting data in an OLTP system for really any purpose.
+2. Just delete the data. This code utilizes this process. The advantage of this is that you can use it for slowly deleting data in an OLTP system for really any purpose.
 
 ## Architecture
 This code was written for SQL Server. Nothing sophisticated, so probably could be used on SQL Server 2005+. Concepts could easily be ported to other SQL engines.
