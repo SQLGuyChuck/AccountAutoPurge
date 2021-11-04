@@ -1,7 +1,7 @@
 # AccountAutoPurge
-This code repo provides a process to automate the purge of data in SQL Server tables based on a user identifier that slowly deletes all of a user's data for cases like GDPR forget me.
+This code repo provides a process to automate the purge of data in SQL Server tables based on a user identifier that slowly deletes all of a user's data for cases like GDPR Article 17 right to erasure.
 
-Developed and written by Chuck Lathrope (SQLGuyChuck). Please do help contribute and request features. I use Gmail for email if you want to reach me at my alias.
+Developed and written by Chuck Lathrope (SQLGuyChuck) with help from Melanie Labuguen and Michael Capobianco. Please do help contribute via forking code and creating PR against it so I will see or request features. I use Gmail for email if you want to reach me at my alias.
 
 ## Why
 This process was developed out of necessity of GDPR Article 17 for a data subjects rights to erasure. This can be accomplished in a couple of ways:
@@ -44,18 +44,19 @@ jc_Purge_AddPurgeKeys: When there is a new table from which data needs to be pur
 
 jc_Purge_AutomatedPurgeProcessWrapper: Wrapper to do the work after purge accounts and keys are populated. There is an input parameter named @OverrideTimeConstraint that, when set to 1, is used to allow purging out of the defined don’t process timeframes. The timeframes are defined in jc_Purge_PurgeUsersByBatchId (see below). It will process all batches of specified BatchTypeID passed in.
 
+jc_Purge_PurgeUsersByBatchId: Purges users by BatchID
+
+To be uploaded:
 jc_Purge_PopulateListofAccountsToPurge: This stored procedure populates the table that controls the list of accounts jc_Purge_ListofAccountsToPurge. In addition, this stored procedure populates the table jc_Purge_ListofAccountsToPurge with any username passed to it.
 
 jc_Purge_PostPurgeCleanupByBatchId: An example of a manual post user purge process that cleans up posts created by any account that is purged as this process doesn't handle a table with two UserIds being used in a table.
 
 jc_Purge_PostPurgeEmployerCleanupByBatchId: An example of a post processing of BatchTypeID = 4 for customer purges. It would be used to purge customer metadata.
 
-jc_Purge_PurgeUsersByBatchId: Purges users by BatchID
-
 ### BatchTypeIDs: There are currently four BatchTypeIDs that are used to manage different kinds of purges.
 BatchTypeID 1 = User account purges. Can be 1 to bigint size.
-BatchTypeID 2 = Archive purge	To be used for table archive process. A separate process that I may document here, but would use different procs to control it.
-BatchTypeID 3 = DBA purge (No automation).	Used for extremely large purges performed off-hours (like purging millions of rows from numerous tables). We do not want the nightly process to handle these purges because the purge takes hours over many days and any new accounts to be deleted will not be processed.
+BatchTypeID 2 = Archive purge. To be used for table archive process. A separate process that I may document here, but would use different procs to control it.
+BatchTypeID 3 = DBA purge (No automation). Used for extremely large purges performed off-hours (like purging millions of rows from numerous tables). We do not want the nightly process to handle these purges because the purge takes hours over many days and any new accounts to be deleted will not be processed.
 BatchTypeID 4 = Full customer purge that allows for customer metadata purge with jc_Purge_PostPurgeEmployerCleanupByBatchId
 
 
