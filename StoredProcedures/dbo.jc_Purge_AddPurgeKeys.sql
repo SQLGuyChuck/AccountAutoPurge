@@ -33,9 +33,8 @@ AND TableID = 1
 --Step 2 (per table): Insert PK to be deleted
 INSERT INTO dbo.jc_Purge_KeyValuesToDelete (BatchID, TableID, Varcharvalue, IntValue)
 SELECT @BatchID, 1,NULL,tab.ID
-FROM jc_ActivityMeasurement tab
-JOIN jc_UserActivity ua ON tab.UserActivityId = ua.Id
-JOIN jc_Purge_ListofAccountsToPurge info ON info.LimeadeAccountID = ua.LimeadeAccountId AND info.BatchID = @BatchID
+FROM AccountDomains tab
+JOIN jc_Purge_ListofAccountsToPurge info ON info.AccountID = ua.AccountID AND info.BatchID = @BatchID
 LEFT JOIN jc_Purge_KeyValuesToDelete del ON del.IntValue = tab.Id AND del.TableID = 1 AND del.BatchID = @BatchID
 WHERE
 	del.IntValue IS NULL;
