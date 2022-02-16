@@ -62,8 +62,9 @@ BEGIN
 			--Perform cleanup
 			EXEC jc_Purge_PostPurgeCleanupByBatchId @BatchId = @BatchId
 
-			IF @BatchTypeId = 4
-				EXEC jc_Purge_PostPurgeEmployerCleanupByBatchId @BatchId = @BatchId
+			--If there is a parent entity to purge for an account, run post purge process for it:
+			--IF @BatchTypeId = 4
+			--	EXEC jc_Purge_PostPurgeEmployerCleanupByBatchId @BatchId = @BatchId
 
 		END TRY
 		BEGIN CATCH
